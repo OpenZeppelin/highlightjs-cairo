@@ -1,5 +1,7 @@
 # highlightjs-cairo
 
+[![NPM Package](https://img.shields.io/npm/v/highlightjs-cairo?color=%23e55233)](https://www.npmjs.com/package/highlightjs-cairo)
+
 [Cairo](https://www.cairo-lang.org/) language definition for [highlight.js](https://highlightjs.org/).
 
 ### Install
