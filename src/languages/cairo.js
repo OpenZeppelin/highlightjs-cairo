@@ -69,8 +69,6 @@ function hljsDefineCairo(hljs) {
     'FALSE',
   ];
 
-  const LITERALS = [];
-
   const TYPES = [
     'felt',
   ];
@@ -79,8 +77,7 @@ function hljsDefineCairo(hljs) {
     $pattern: /[A-Za-z]\w+|\w+_/,
     keyword: RESERVED_WORDS,
     built_in: BUILT_INS,
-    literal: LITERALS,
-    type: TYPES
+    type: TYPES,
   };
 
   if (typeof cairoLanguage.keywords !== 'object') {

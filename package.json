@@ -7,6 +7,9 @@
     "dist",
     "src"
   ],
+  "scripts": {
+    "test": "mocha"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/OpenZeppelin/highlightjs-cairo.git"
@@ -23,6 +26,10 @@
     "url": "https://github.com/OpenZeppelin/highlightjs-cairo/issues"
   },
   "homepage": "https://github.com/OpenZeppelin/highlightjs-cairo#readme",
+  "devDependencies": {
+    "mocha": "^6.2.1",
+    "parse5": "^5.1.0"
+  },
   "dependencies": {
     "highlight.js": "^11.0.0"
   }
