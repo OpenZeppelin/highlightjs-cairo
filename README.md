@@ -1,0 +1,31 @@
+# highlightjs-cairo
+
+[Cairo](https://www.cairo-lang.org/) language definition for [highlight.js](https://highlightjs.org/).
+
+### Install
+
+```bash
+npm i highlight.js highlightjs-cairo
+```
+
+### Usage
+
+Browser:
+
+```html
+<script type="text/javascript" src="/path/to/highlight.min.js"></script>
+<script type="text/javascript" src="/path/to/cairo.min.js"></script>
+<script type="text/javascript">
+    hljs.highlightAll();
+</script>
+```
+
+Node:
+   
+```javascript
+const hljs = require('highlight.js/lib/core');
+const hljsDefineCairo = require('highlightjs-cairo');
+
+hljsDefineCairo(hljs);
+const highlighted = hljs.highlight(source, {language: 'cairo'}).value;
+```

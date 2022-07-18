@@ -1,0 +1,29 @@
+{
+  "name": "highlightjs-cairo",
+  "version": "0.1.0",
+  "description": "highlight.js syntax definition for Cairo",
+  "main": "src/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/OpenZeppelin/highlightjs-cairo.git"
+  },
+  "keywords": [
+    "Cairo",
+    "StarkNet",
+    "highlight.js",
+    "highlightjs",
+    "syntax"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OpenZeppelin/highlightjs-cairo/issues"
+  },
+  "homepage": "https://github.com/OpenZeppelin/highlightjs-cairo#readme",
+  "dependencies": {
+    "highlight.js": "^11.0.0"
+  }
+}
