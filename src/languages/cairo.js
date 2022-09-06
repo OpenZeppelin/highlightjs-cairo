@@ -1,6 +1,7 @@
 const python = require('highlight.js/lib/languages/python');
 
 function hljsDefineCairo(hljs) {
+  const regex = hljs.regex;
   const cairoLanguage = python(hljs);
 
   const RESERVED_WORDS = [
@@ -85,6 +86,18 @@ function hljsDefineCairo(hljs) {
   }
 
   Object.assign(cairoLanguage.keywords, KEYWORDS);
+
+  const comment = cairoLanguage.contains.find(element => element.className === 'comment');
+  if (comment !== undefined) {
+    comment.begin = regex.lookahead(/\/\//);
+    comment.contains = [
+      {
+        begin: /\/\//,
+        end: /\b\B/,
+        endsWithParent: true
+      }
+    ];
+  }
 
   Object.assign(cairoLanguage, {
     name: 'Cairo',
