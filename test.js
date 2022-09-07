@@ -97,7 +97,7 @@ it('annotations', function () {
 });
 
 it('comments', function () {
-  const comments = ['#hello', '# SPDX-License-Identifier: MIT'];
+  const comments = ['//hello', '// SPDX-License-Identifier: MIT'];
 
   for (const comment of comments) {
     assert.deepEqual(getTokens(comment), [['comment', comment]]);
