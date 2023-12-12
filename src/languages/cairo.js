@@ -1,103 +1,108 @@
-const python = require('highlight.js/lib/languages/python');
+const rust = require('highlight.js/lib/languages/rust');
 
 function hljsDefineCairo(hljs) {
-  const regex = hljs.regex;
-  const cairoLanguage = python(hljs);
+  const cairoLanguage = rust(hljs);
 
-  const RESERVED_WORDS = [
-    // control
-    'if',
-    'with',
-    'with_attr',
-    'else',
-
-    // opcode
-    'call',
-    'jmp',
-    'ret',
-    'abs',
-    'rel',
-
-    // register
-    'ap',
-    'fp',
-
-    // other
+  const MAIN_KEYWORDS = [
+    // strict keywords - https://docs.cairo-lang.org/language_constructs/keywords.html#strict_keywords
+    'break',
     'const',
-    'let',
-    'local',
-    'tempvar',
-    'felt',
-    'as',
-    'from',
-    'import',
-    'static_assert',
+    'continue',
+    'else',
+    'enum',
+    'false',
+    'for',
+    'fn',
+    'hint',
+    'if',
+    'impl',
+    'in',
+    'match',
+    'pub',
     'return',
-    'assert',
-    'member',
-    'cast',
-    'alloc_locals',
-    'with',
-    'with_attr',
-    'nondet',
-    'dw',
-    'codeoffset',
-    'new',
-    'using',
-
-    // sizeof
-    'SIZEOF_LOCALS',
-    'SIZE',
-
-    // function
-    'func',
-    'end',
     'struct',
-    'namespace',
+    'trait',
+    'true',
+    'type',
+    'use',
 
-    // directives
-    'builtins',
-    'lang',
+    // reserved keywords - https://docs.cairo-lang.org/language_constructs/keywords.html#reserved_keywords
+    'as',
+    'assert',
+    'do',
+    'dyn',
+    'extern',
+    'let',
+    'macro',
+    'mod',
+    'move',
+    'ref',
+    // 'Self',
+    // 'self',
+    'static_assert',
+    'static',
+    'super',
+    'try',
+    'typeof',
+    'unsafe',
+    'where',
+    'while',
+    'with',
+    'yield',
   ];
 
-  const BUILT_INS = [
-    'HashBuiltin',
-    'SignatureBuiltin',
-    'BitwiseBuiltin',
-    'EcOpBuiltin',
-    'Uint256',
-    'TRUE',
-    'FALSE',
+  const LITERALS = [
+    'true',
+    'false',
   ];
 
   const TYPES = [
-    'felt',
+    'bool',
+    'u8',
+    'u16',
+    'u32',
+    'u64',
+    'u128',
+    'u256',
+    'usize',
   ];
-
-  const KEYWORDS = {
-    $pattern: /[A-Za-z]\w+|\w+_/,
-    keyword: RESERVED_WORDS,
-    built_in: BUILT_INS,
-    type: TYPES,
-  };
 
   if (typeof cairoLanguage.keywords !== 'object') {
     throw Error('Expected object');
   }
 
+  const KEYWORDS = {
+    $pattern: /[A-Za-z]\w+|\w+_/,
+    keyword: MAIN_KEYWORDS,
+    literal: LITERALS,
+    type: TYPES,
+  };
+
   Object.assign(cairoLanguage.keywords, KEYWORDS);
 
-  const comment = cairoLanguage.contains.find(element => element.className === 'comment');
-  if (comment !== undefined) {
-    comment.begin = regex.lookahead(/\/\//);
-    comment.contains = [
+  Object.assign(cairoLanguage.contains, [
+      ...cairoLanguage.contains,
       {
-        begin: /\/\//,
-        end: /\b\B/,
-        endsWithParent: true
-      }
-    ];
-  }
+        className: 'built_in',
+        begin: 'selector!',
+      },
+      {
+        className: 'built_in',
+        begin: 'component!',
+      },
+      {
+        begin: [
+          /mod/,
+          /\s+/,
+          hljs.UNDERSCORE_IDENT_RE
+        ],
+        className: {
+          1: 'keyword',
+          3: 'title.class',
+        }
+      },
+    ]
+  );
 
   Object.assign(cairoLanguage, {
     name: 'Cairo',

@@ -33,7 +33,6 @@ it('numbers', function () {
   ];
 
   const fail = [
-    '1234_',
     'ZZ68656c6c6f',
   ];
 
@@ -48,7 +47,7 @@ it('numbers', function () {
 
 it('strings', function () {
   const ok = [
-    '\'Hello\'', '"Hello"'
+    '"Hello"'
   ];
 
   const fail = [
@@ -65,23 +64,23 @@ it('strings', function () {
 });
 
 it('keywords', function () {
-  const keywords = ['from', 'import', 'func', 'return', 'end'];
+  const keywords = ['mod', 'use', 'fn', 'impl', 'ref'];
 
   for (const keyword of keywords) {
     assert.deepEqual(getTokens(keyword), [['keyword', keyword]]);
   }
 });
 
-it('builtins', function () {
-  const builtins = ['HashBuiltin', 'SignatureBuiltin', 'BitwiseBuiltin', 'EcOpBuiltin', 'Uint256'];
+it('literals', function () {
+  const literals = ['true', 'false'];
 
-  for (const b of builtins) {
-    assert.deepEqual(getTokens(b), [['built_in', b]]);
+  for (const b of literals) {
+    assert.deepEqual(getTokens(b), [['literal', b]]);
   }
 });
 
 it('types', function () {
-  const types = ['felt'];
+  const types = ['bool', 'u256'];
 
   for (const type of types) {
     assert.deepEqual(getTokens(type), [['type', type]]);
@@ -89,7 +88,7 @@ it('types', function () {
 });
 
 it('annotations', function () {
-  const annotations = ['@constructor', '@view', '@external'];
+  const annotations = ['#[starknet::contract]', '#[storage]', '#[external(v0)]'];
 
   for (const annotation of annotations) {
     assert.deepEqual(getTokens(annotation), [['meta', annotation]]);
