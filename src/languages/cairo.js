@@ -1,4 +1,4 @@
-const rust = require('highlight.js/lib/languages/rust');
+const rust = require('./vendored/rust');
 
 function hljsDefineCairo(hljs) {
   const cairoLanguage = rust(hljs);
@@ -72,10 +72,9 @@ function hljsDefineCairo(hljs) {
   }
 
   const KEYWORDS = {
-    $pattern: /[A-Za-z]\w+|\w+_/,
-    keyword: MAIN_KEYWORDS,
-    literal: LITERALS,
-    type: TYPES,
+    keyword: MAIN_KEYWORDS.join(' '),
+    literal: LITERALS.join(' '),
+    type: TYPES.join(' '),
   };
 
   Object.assign(cairoLanguage.keywords, KEYWORDS);
@@ -91,15 +90,31 @@ function hljsDefineCairo(hljs) {
         begin: 'component!',
       },
       {
-        begin: [
-          /mod/,
-          /\s+/,
-          hljs.UNDERSCORE_IDENT_RE
+        className: 'class',
+        beginKeywords: 'mod', end: '{',
+        contains: [
+          hljs.inherit(hljs.UNDERSCORE_TITLE_MODE, {endsParent: true})
         ],
-        className: {
-          1: 'keyword',
-          3: 'title.class',
-        }
+      },
+      {
+        className: 'class',
+        beginKeywords: 'impl', end: ';',
+        contains: [
+          hljs.inherit(hljs.UNDERSCORE_TITLE_MODE, {endsParent: true})
+        ],
+      },
+      {
+        beginKeywords: 'let', end: ';',
+        contains: [
+          hljs.inherit({
+            className: 'variable',
+            begin: hljs.UNDERSCORE_IDENT_RE,
+            relevance: 0
+          },
+          {
+            endsParent: true
+          }),
+        ],
       },
     ]
   );

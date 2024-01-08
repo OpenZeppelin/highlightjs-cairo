@@ -9,8 +9,7 @@ defineCairo(hljs);
 // Receives a Cairo snippet and returns an array of [type, text] tuples.
 // Type is the detected token type, and text the corresponding source text.
 function getTokens(source) {
-  const { value } = hljs.highlight(source, { language: 'cairo' });
-  const frag = parse5.parseFragment(value);
+  const frag = parse5.parseFragment(highlight(source));
 
   return frag.childNodes.map(function (node) {
     if (node.nodeName === '#text') {
@@ -24,6 +23,10 @@ function getTokens(source) {
       return [type, node.childNodes[0].value];
     }
   });
+}
+
+function highlight(source) {
+  return hljs.highlight('cairo', source).value;
 }
 
 it('numbers', function () {
@@ -63,12 +66,24 @@ it('strings', function () {
   }
 });
 
-it('keywords', function () {
-  const keywords = ['mod', 'use', 'fn', 'impl', 'ref'];
+it('keyword mod', function () {
+  assert.equal(highlight('mod Foo {}'), '<span class="hljs-class"><span class="hljs-keyword">mod</span> <span class="hljs-title">Foo</span></span> {}');
+});
 
-  for (const keyword of keywords) {
-    assert.deepEqual(getTokens(keyword), [['keyword', keyword]]);
-  }
+it('keyword use', function () {
+  assert.equal(highlight('use foo::Bar;'), '<span class="hljs-keyword">use</span> foo::Bar;');
+});
+
+it('keyword fn', function () {
+  assert.equal(highlight('fn foo() {}'), '<span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">foo</span></span>() {}');
+});
+
+it('keyword impl', function () {
+  assert.equal(highlight('impl FooImpl = BarImpl;'), '<span class="hljs-class"><span class="hljs-keyword">impl</span> <span class="hljs-title">FooImpl</span></span> = BarImpl;');
+});
+
+it('keyword ref', function () {
+  assert.equal(highlight('ref self: ContractState'), '<span class="hljs-keyword">ref</span> self: ContractState');
 });
 
 it('literals', function () {
