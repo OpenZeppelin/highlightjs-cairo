@@ -22,8 +22,16 @@ Browser:
 </script>
 ```
 
-Node:
-   
+Node (Highlight.js v9):
+```javascript
+const hljs = require('highlight.js');
+const hljsDefineCairo = require('highlightjs-cairo');
+
+hljsDefineCairo(hljs);
+const highlighted = hljs.highlight('cairo', source).value;
+```
+
+Node (Highlight.js v11):
 ```javascript
 const hljs = require('highlight.js/lib/core');
 const hljsDefineCairo = require('highlightjs-cairo');
