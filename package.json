@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/OpenZeppelin/highlightjs-cairo#readme",
   "devDependencies": {
-    "highlight.js": "^9.18.3",
+    "highlight.js": "^10.4.1",
     "mocha": "^6.2.1",
     "parse5": "^5.1.0"
   }
